@@ -1,0 +1,15 @@
+stages:
+  - build
+  - test
+
+job_build:
+  stage: build
+  script:
+    - echo "Building the project"
+    - docker compose up --build
+
+job_test:
+  stage: test
+  script:
+    - echo "Running tests"
+    - echo "no test scripts are setup currently"
