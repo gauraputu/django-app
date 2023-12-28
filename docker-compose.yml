@@ -1,4 +1,4 @@
-version: "1.0"
+version: "2.0"
 services:
   db:
     image: postgres
@@ -10,7 +10,8 @@ services:
       - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    #command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "gunicorn composeexample.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
@@ -21,3 +22,10 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
